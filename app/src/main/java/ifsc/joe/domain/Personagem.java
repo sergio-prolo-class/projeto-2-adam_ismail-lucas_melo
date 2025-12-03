@@ -10,16 +10,18 @@ public abstract class Personagem
     protected int vida;
     protected int ataque;
     protected int velocidade;
+    protected int esquiva;
     protected boolean vivo;
     protected boolean atacando;
 
-    public Personagem(int x, int y, int vida, int ataque, int velocidade) 
+    public Personagem(int x, int y, int vida, int ataque, int velocidade, int esquiva) 
     {
         this.x = x;
         this.y = y;
         this.vida = vida;
         this.ataque = ataque;
         this.velocidade = velocidade;
+        this.esquiva = esquiva;
         this.vivo = true;
         this.atacando = false;
     }
@@ -40,9 +42,19 @@ public abstract class Personagem
         if (y > alt - 20) y = alt - 20;
     }
 
+    
     public void receberDano(int valor) 
     {
         if (!vivo) return;
+
+        int sorteio = (int) (Math.random() * 100) + 1;
+                
+        if (sorteio <= esquiva)
+        {
+            esquivar();
+            return;
+        }
+
         vida -= valor;
 
         if (vida <= 0)
@@ -50,6 +62,11 @@ public abstract class Personagem
             vida = 0;
             vivo = false;
         } 
+    }
+
+    protected void esquivar() 
+    {
+        System.out.println("O personagem " + id + " desviou do ataque!");
     }
 
     public boolean isVivo()
@@ -67,18 +84,14 @@ public abstract class Personagem
         this.atacando = a;
     }
 
-    public void esquivar()
-    {
-
-    }
-
+    
     public int getId() {return id;}
     public void setId(int id) {this.id = id;}
 
     public int getX() {return x;}
     public int getY() {return y;}
     public int getVida() {return vida;}
-    public int getAtaque() {return ataque}
+    public int getAtaque() {return ataque;}
     public int getVelocidade() {return velocidade;}
-    
+
 }
