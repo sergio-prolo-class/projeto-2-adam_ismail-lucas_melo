@@ -24,5 +24,61 @@ public abstract class Personagem
         this.atacando = false;
     }
 
+    public abstract void atualizar();
+    public abstract void desenhar(Graphics g);
+
+    public void mover(int dx, int dy, int larg, int alt) 
+    {
+        if (!vivo) return;
+        x += dx * velocidade;
+        y += dy * velocidade;
+
+        // limites de tela
+        if (x < 0) x = 0;
+        if (y < 0) y = 0;
+        if (x > larg - 20) x = larg - 20;
+        if (y > alt - 20) y = alt - 20;
+    }
+
+    public void receberDano(int valor) 
+    {
+        if (!vivo) return;
+        vida -= valor;
+
+        if (vida <= 0)
+        {
+            vida = 0;
+            vivo = false;
+        } 
+    }
+
+    public boolean isVivo()
+    {
+        return vivo;
+    }
+
+    public Rectangle getBounds() 
+    {
+        return new Rectangle(x, y, 20, 20);
+    }
+
+    public void setAtacando(boolean a)
+    {
+        this.atacando = a;
+    }
+
+    public void esquivar()
+    {
+
+    }
+
+    public int getId() {return id;}
+    public void setId(int id) {this.id = id;}
+
+    public int getX() {return x;}
+    public int getY() {return y;}
+    public int getVida() {return vida;}
+    public int getAtaque() {return ataque}
+    public int getVelocidade() {return velocidade;}
     
 }
