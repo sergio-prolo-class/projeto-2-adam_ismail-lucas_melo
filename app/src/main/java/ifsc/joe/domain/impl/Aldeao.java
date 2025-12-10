@@ -1,72 +1,50 @@
 package ifsc.joe.domain.impl;
 
-import ifsc.joe.enums.Direcao;
+import ifsc.joe.domain.Personagem;
+import ifsc.joe.domain.Interfaces.Coletador;
 
 import javax.swing.*;
 import java.awt.*;
 import java.util.Objects;
 
-public class Aldeao {
+public class Aldeao extends Personagem implements Coletador {
 
-    public static final String NOME_IMAGEM = "aldeao";
-
-    private int posX, posY;
-    private boolean atacando;
     private Image icone;
 
-    public Aldeao(int x, int y) {
-        this.icone = this.carregarImagem(NOME_IMAGEM);
-        this.posX = x;
-        this.posY = y;
+    public Aldeao(int x, int y, int id) {
+        super(x, y,
+                50,   // vida
+                5,    // ataque
+                5,    // velocidade
+                10    // esquiva
+        );
+        this.id = id;
         this.atacando = false;
+        this.icone = carregarImagem("aldeao");
     }
 
-    /**
-     * Desenhando o Aldeão, nas coordenadas X e Y, com a imagem 'icone'
-     * no JPanel 'pai'
-     *
-     * @param g objeto do JPanel que será usado para desenhar o Aldeão
-     */
-    public void desenhar(Graphics g, JPanel painel) {
-        // verificando qual imagem carregar
-        this.icone = this.carregarImagem(NOME_IMAGEM + (atacando ? "2" : ""));
-        // desenhando de fato a imagem no pai
-        g.drawImage(this.icone, this.posX, this.posY, painel);
+    @Override
+    public void atualizar() {
+        // aldeão não tem lógica especial de atualização ainda
+        // aqui podemos colocar coleta/mineração se quiser depois
     }
 
-    /**
-     * Atualiza as coordenadas X e Y do personagem
-     *
-     * @param direcao indica a direcao a ir.
-     */
-    public void mover(Direcao direcao, int maxLargura, int maxAltura) {
-        switch (direcao) {
-            case CIMA     -> this.posY -= 10;
-            case BAIXO    -> this.posY += 10;
-            case ESQUERDA -> this.posX -= 10;
-            case DIREITA  -> this.posX += 10;
-        }
+    @Override
+    public void desenhar(Graphics g) {
+        String nomeImg = atacando ? "aldeao2" : "aldeao";
+        this.icone = carregarImagem(nomeImg);
+        g.drawImage(this.icone, x, y, null);
+    }
 
-        //Não deixa a imagem ser desenhada fora dos limites do JPanel pai
-        this.posX = Math.min(Math.max(0, this.posX), maxLargura - this.icone.getWidth(null));
-        this.posY = Math.min(Math.max(0, this.posY), maxAltura - this.icone.getHeight(null));
+    @Override
+    public void coletar(Personagem p) {
+        System.out.println("Aldeão " + id + " está coletando recursos de " + p.getId());
     }
 
 
-    public void atacar() {
-        this.atacando = !this.atacando;
-    }
-
-    /**
-     * Metodo auxiliar para carregar uma imagem do disco
-     *
-     * @param imagem Caminho da imagem
-     * @return Retorna um objeto Image
-     */
-    private Image carregarImagem(String imagem) {
+    private Image carregarImagem(String nome) {
         return new ImageIcon(Objects.requireNonNull(
-                getClass().getClassLoader().getResource("./"+imagem+".png")
+                getClass().getClassLoader().getResource(nome + ".png")
         )).getImage();
     }
-
 }
