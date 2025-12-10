@@ -1,7 +1,7 @@
 package ifsc.joe.domain.impl;
 
 import ifsc.joe.domain.Personagem;
-import ifsc.joe.domain.Interfaces.Coletador;
+import ifsc.joe.domain.interfaces.Coletador;
 
 import javax.swing.*;
 import java.awt.*;

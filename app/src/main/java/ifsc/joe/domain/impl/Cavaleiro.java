@@ -1,8 +1,8 @@
 package ifsc.joe.domain.impl;
 
 import ifsc.joe.domain.Personagem;
-import ifsc.joe.domain.Interfaces.Lutador;
-import ifsc.joe.domain.Interfaces.ComMontaria;
+import ifsc.joe.domain.interfaces.ComMontaria;
+import ifsc.joe.domain.interfaces.Lutador;
 
 import javax.swing.*;
 import java.awt.*;

@@ -63,7 +63,7 @@ public class GameEngine {
     for (Personagem atacante : personagens) {
 
         // só guerreiros atacam
-        if (!(atacante instanceof ifsc.joe.domain.Interfaces.Lutador)) {
+        if (!(atacante instanceof ifsc.joe.domain.interfaces.Lutador)) {
             continue;
         }
 
