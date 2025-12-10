@@ -59,7 +59,9 @@ public class Cavaleiro extends Personagem implements Lutador, ComMontaria {
 
     @Override
     public void desenhar(Graphics g) {
-        g.drawImage(this.icone, x, y, null);
+        String nome = atacando ? "cavaleiro" : "cavaleiro";
+        g.drawImage(carregarImagem(nome), x, y, null);
+
     }
 
     private Image carregarImagem(String nome) {

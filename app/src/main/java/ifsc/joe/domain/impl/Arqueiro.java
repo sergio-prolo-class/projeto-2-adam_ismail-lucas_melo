@@ -40,7 +40,9 @@ public class Arqueiro extends Personagem implements Lutador {
 
     @Override
     public void desenhar(Graphics g) {
-        g.drawImage(this.icone, x, y, null);
+        String nome = atacando ? "arqueiro" : "arqueiro";
+        g.drawImage(carregarImagem(nome), x, y, null);
+    
     }
 
     private Image carregarImagem(String nome) {

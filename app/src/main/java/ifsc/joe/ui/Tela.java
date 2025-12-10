@@ -61,12 +61,11 @@ public class Tela extends JPanel {
         repaint();
     }
 
-    public void atacarAldeoes() {
-        for (Personagem p : engine.getPersonagens()) {
-            p.setAtacando(!p.isVivo()); // toggle simples temporário
-        }
+    public void atacar() {
+        engine.atacarGuerreiros(50); // 50 px de raio
         repaint();
     }
+
 
     public GameEngine getEngine() {
         return engine;

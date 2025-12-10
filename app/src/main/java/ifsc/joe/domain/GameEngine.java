@@ -58,4 +58,33 @@ public class GameEngine {
         adicionarPersonagem(p);
         return p;
     }
+
+    public void atacarGuerreiros(int distancia) {
+    for (Personagem atacante : personagens) {
+
+        // só guerreiros atacam
+        if (!(atacante instanceof ifsc.joe.domain.Interfaces.Lutador)) {
+            continue;
+        }
+
+        atacante.setAtacando(true);
+
+        for (Personagem alvo : personagens) {
+            if (alvo == atacante) continue;
+            if (!alvo.isVivo()) continue;
+
+            // calcular distância
+            double dx = atacante.getX() - alvo.getX();
+            double dy = atacante.getY() - alvo.getY();
+            double dist = Math.sqrt(dx*dx + dy*dy);
+
+            if (dist <= distancia) {
+                alvo.receberDano(atacante.getAtaque());
+            }
+        }
+    }
+
+    removerMortos();
+}
+
 }

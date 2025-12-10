@@ -72,7 +72,7 @@ public class PainelControles {
      * Configura o listener do botão de ataque
      */
     private void configurarBotaoAtaque() {
-        atacarButton.addActionListener(e -> getTela().atacarAldeoes());
+        atacarButton.addActionListener(e -> getTela().atacar());
     }
 
     /**
