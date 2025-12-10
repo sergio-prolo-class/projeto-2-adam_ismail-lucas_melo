@@ -2,21 +2,23 @@ package ifsc.joe.domain.impl;
 
 import ifsc.joe.domain.Personagem;
 import ifsc.joe.domain.interfaces.Coletador;
-
 import javax.swing.*;
 import java.awt.*;
 import java.util.Objects;
+import ifsc.joe.domain.Config;
 
 public class Aldeao extends Personagem implements Coletador {
 
     private Image icone;
 
     public Aldeao(int x, int y, int id) {
-        super(x, y,
-                50,   // vida
-                5,    // ataque
-                5,    // velocidade
-                10    // esquiva
+        super(
+                x, 
+                y,
+                Config.getInt("aldeao.vida"),
+                Config.getInt("aldeao.ataque"),
+                Config.getInt("aldeao.velocidade"),
+                Config.getInt("aldeao.esquiva")
         );
         this.id = id;
         this.atacando = false;

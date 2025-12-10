@@ -2,10 +2,10 @@ package ifsc.joe.domain.impl;
 
 import ifsc.joe.domain.Personagem;
 import ifsc.joe.domain.interfaces.Lutador;
-
 import javax.swing.*;
 import java.awt.*;
 import java.util.Objects;
+import ifsc.joe.domain.Config;
 
 public class Arqueiro extends Personagem implements Lutador {
 
@@ -13,11 +13,12 @@ public class Arqueiro extends Personagem implements Lutador {
 
     public Arqueiro(int x, int y, int id) {
         super(
-                x, y,
-                60,   // vida
-                12,   // ataque
-                6,    // velocidade
-                15    // esquiva
+                x,
+                y,
+                Config.getInt("arqueiro.vida"),
+                Config.getInt("arqueiro.ataque"),
+                Config.getInt("arqueiro.velocidade"),
+                Config.getInt("arqueiro.esquiva")
         );
         this.id = id;
         this.atacando = false;

@@ -3,9 +3,9 @@ package ifsc.joe.ui;
 import ifsc.joe.domain.GameEngine;
 import ifsc.joe.domain.Personagem;
 import ifsc.joe.enums.Direcao;
-
 import javax.swing.*;
 import java.awt.*;
+import ifsc.joe.domain.Config;
 
 public class Tela extends JPanel {
 
@@ -62,9 +62,10 @@ public class Tela extends JPanel {
     }
 
     public void atacar() {
-        engine.atacarGuerreiros(50); // 50 px de raio
+        engine.atacarGuerreiros(Config.getInt("engine.colisao.distancia"));
         repaint();
     }
+
 
 
     public GameEngine getEngine() {

@@ -3,10 +3,10 @@ package ifsc.joe.domain.impl;
 import ifsc.joe.domain.Personagem;
 import ifsc.joe.domain.interfaces.ComMontaria;
 import ifsc.joe.domain.interfaces.Lutador;
-
 import javax.swing.*;
 import java.awt.*;
 import java.util.Objects;
+import ifsc.joe.domain.Config;
 
 public class Cavaleiro extends Personagem implements Lutador, ComMontaria {
 
@@ -15,11 +15,12 @@ public class Cavaleiro extends Personagem implements Lutador, ComMontaria {
 
     public Cavaleiro(int x, int y, int id) {
         super(
-                x, y,
-                100, // vida
-                20,  // ataque
-                8,   // velocidade
-                5    // esquiva
+                x,
+                y,
+                Config.getInt("cavaleiro.vida"),
+                Config.getInt("cavaleiro.ataque"),
+                Config.getInt("cavaleiro.velocidade"),
+                Config.getInt("cavaleiro.esquiva")
         );
         this.id = id;
         this.atacando = false;
