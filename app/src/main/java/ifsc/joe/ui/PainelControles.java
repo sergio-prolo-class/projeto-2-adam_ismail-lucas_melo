@@ -62,16 +62,11 @@ public class PainelControles {
     private void configurarBotoesCriacao() {
         bCriaAldeao.addActionListener(e -> criarAldeaoAleatorio());
 
-        bCriaArqueiro.addActionListener(e -> {
-            //TODO: Implementar criação de arqueiro
-            mostrarMensagemNaoImplementado("Criar Arqueiro");
-        });
+        bCriaArqueiro.addActionListener(e -> criarArqueiroAleatorio());
 
-        bCriaCavaleiro.addActionListener(e -> {
-            //TODO: Implementar criação de cavaleiro
-            mostrarMensagemNaoImplementado("Criar Cavaleiro");
-        });
+        bCriaCavaleiro.addActionListener(e -> criarCavaleiroAleatorio());
     }
+
 
     /**
      * Configura o listener do botão de ataque
@@ -90,6 +85,22 @@ public class PainelControles {
 
         getTela().criarAldeao(posX, posY);
     }
+    private void criarArqueiroAleatorio() {
+    final int PADDING = 50;
+    int posX = sorteio.nextInt(painelTela.getWidth() - PADDING);
+    int posY = sorteio.nextInt(painelTela.getHeight() - PADDING);
+
+    getTela().criarArqueiro(posX, posY);
+}
+
+    private void criarCavaleiroAleatorio() {
+        final int PADDING = 50;
+        int posX = sorteio.nextInt(painelTela.getWidth() - PADDING);
+        int posY = sorteio.nextInt(painelTela.getHeight() - PADDING);
+
+        getTela().criarCavaleiro(posX, posY);
+    }
+
 
     /**
      * Exibe mensagem informando que a funcionalidade ainda não foi implementada.
