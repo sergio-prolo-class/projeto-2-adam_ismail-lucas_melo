@@ -8,11 +8,17 @@ import ifsc.joe.domain.impl.Aldeao;
 import ifsc.joe.domain.impl.Arqueiro;
 import ifsc.joe.domain.impl.Cavaleiro;
 
+
+
 public class GameEngine {
 
-    private List<Personagem> personagens;
-    private int nextId = 1;
-    private final Random random;
+    private List<Personagem> personagens; // lista de personagens no jogo
+    private int nextId = 1; // próximo ID disponível
+    private final Random random; // gerador de números aleatórios
+    private int mortesAldeao = 0; // contador de mortes por tipo
+    private int mortesArqueiro = 0;
+    private int mortesCavaleiro = 0;
+
 
     public GameEngine() {
         this.personagens = new ArrayList<>();
@@ -29,7 +35,18 @@ public class GameEngine {
     }
 
     public void removerMortos() {
-        personagens.removeIf(p -> !p.isVivo());
+        personagens.removeIf(p -> {
+            if (!p.isVivo()) {
+                
+                if (p instanceof ifsc.joe.domain.impl.Aldeao) mortesAldeao++;
+                if (p instanceof ifsc.joe.domain.impl.Arqueiro) mortesArqueiro++;
+                if (p instanceof ifsc.joe.domain.impl.Cavaleiro) mortesCavaleiro++;
+
+                System.out.println("Morto: " + p.getClass().getSimpleName());
+                return true;
+            }
+            return false;
+        });
     }
 
     public List<Personagem> getPersonagens() {

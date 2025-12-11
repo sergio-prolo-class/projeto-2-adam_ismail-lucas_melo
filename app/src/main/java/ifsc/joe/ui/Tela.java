@@ -21,7 +21,9 @@ public class Tela extends JPanel {
         super.paint(g);
 
         for (Personagem p : engine.getPersonagens()) {
-            p.desenhar(g);
+            if (p.isVivo()) {
+                p.desenhar(g);
+            }
         }
     }
 
