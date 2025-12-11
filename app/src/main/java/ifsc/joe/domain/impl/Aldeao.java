@@ -6,6 +6,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.Objects;
 import ifsc.joe.domain.Config;
+import java.awt.Graphics2D;
+import java.awt.AlphaComposite;
 
 public class Aldeao extends Personagem implements Coletador {
 
@@ -35,7 +37,10 @@ public class Aldeao extends Personagem implements Coletador {
     public void desenhar(Graphics g) {
         String nomeImg = atacando ? "aldeao2" : "aldeao";
         this.icone = carregarImagem(nomeImg);
-        g.drawImage(this.icone, x, y, null);
+        Graphics2D g2 = (Graphics2D) g.create();
+        g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, alpha));
+        g2.drawImage(icone, x, y, null);
+        g2.dispose();
     }
 
     @Override

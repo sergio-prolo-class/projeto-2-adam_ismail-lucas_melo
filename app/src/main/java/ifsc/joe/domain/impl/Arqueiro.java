@@ -42,8 +42,10 @@ public class Arqueiro extends Personagem implements Lutador {
     @Override
     public void desenhar(Graphics g) {
         String nome = atacando ? "arqueiro" : "arqueiro";
-        g.drawImage(carregarImagem(nome), x, y, null);
-    
+        Graphics2D g2 = (Graphics2D) g.create();
+        g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, alpha));
+        g2.drawImage(icone, x, y, null);
+        g2.dispose();
     }
 
     private Image carregarImagem(String nome) {

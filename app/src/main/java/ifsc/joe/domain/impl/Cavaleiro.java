@@ -7,6 +7,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.Objects;
 import ifsc.joe.domain.Config;
+import java.awt.Graphics2D;
+import java.awt.AlphaComposite;
+
 
 public class Cavaleiro extends Personagem implements Lutador, ComMontaria {
 
@@ -61,8 +64,10 @@ public class Cavaleiro extends Personagem implements Lutador, ComMontaria {
     @Override
     public void desenhar(Graphics g) {
         String nome = atacando ? "cavaleiro" : "cavaleiro";
-        g.drawImage(carregarImagem(nome), x, y, null);
-
+        Graphics2D g2 = (Graphics2D) g.create();
+        g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, alpha));
+        g2.drawImage(icone, x, y, null);
+        g2.dispose();
     }
 
     private Image carregarImagem(String nome) {

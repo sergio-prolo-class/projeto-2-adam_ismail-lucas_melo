@@ -14,6 +14,17 @@ public abstract class Personagem
     protected boolean vivo;
     protected boolean atacando;
 
+    protected float alpha = 1.0f;
+
+    public float getAlpha() {
+        return alpha;
+    }
+
+    public void reduzirAlpha(float passo) {
+        alpha -= passo;
+        if (alpha < 0) alpha = 0;
+    }
+
     public Personagem(int x, int y, int vida, int ataque, int velocidade, int esquiva) 
     {
         this.x = x;
@@ -61,6 +72,7 @@ public abstract class Personagem
         {
             vida = 0;
             vivo = false;
+            alpha = 1.0f;
         } 
     }
 
