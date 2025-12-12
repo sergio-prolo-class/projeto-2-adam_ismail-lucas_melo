@@ -7,8 +7,7 @@ import java.util.Random;
 import ifsc.joe.domain.impl.Aldeao;
 import ifsc.joe.domain.impl.Arqueiro;
 import ifsc.joe.domain.impl.Cavaleiro;
-
-
+import ifsc.joe.ui.FiltroTipo;
 
 public class GameEngine {
 
@@ -103,5 +102,43 @@ public class GameEngine {
 
     removerMortos();
 }
+    public void atacarFiltrados(FiltroTipo filtro) {
+
+        int distancia = Config.getInt("engine.colisao.distancia");
+
+        for (Personagem atacante : personagens) {
+
+            if (!aplicaFiltro(atacante, filtro)) continue;
+            if (!(atacante instanceof ifsc.joe.domain.interfaces.Lutador)) continue;
+
+            for (Personagem alvo : personagens) {
+
+                if (alvo == atacante) continue;
+                if (!alvo.isVivo()) continue;
+
+                double dx = atacante.getX() - alvo.getX();
+                double dy = atacante.getY() - alvo.getY();
+
+                double dist = Math.sqrt(dx*dx + dy*dy);
+
+                if (dist <= distancia) {
+                    alvo.receberDano(atacante.getAtaque());
+                }
+            }
+        }
+
+        removerMortos();
+    }
+    private boolean aplicaFiltro(Personagem p, FiltroTipo filtro) {
+
+    return switch (filtro) {
+        case TODOS -> true;
+        case ALDEAO -> p instanceof ifsc.joe.domain.impl.Aldeao;
+        case ARQUEIRO -> p instanceof ifsc.joe.domain.impl.Arqueiro;
+        case CAVALEIRO -> p instanceof ifsc.joe.domain.impl.Cavaleiro;
+    };
+}
+
+
 
 }

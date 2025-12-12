@@ -1,5 +1,6 @@
 package ifsc.joe.ui;
 
+import ifsc.joe.domain.Personagem;
 import ifsc.joe.enums.Direcao;
 
 import javax.swing.*;
@@ -37,6 +38,14 @@ public class PainelControles {
         configurarListeners();
     }
 
+    private FiltroTipo getFiltroSelecionado() {
+        if (todosRadioButton.isSelected()) return FiltroTipo.TODOS;
+        if (aldeaoRadioButton.isSelected()) return FiltroTipo.ALDEAO;
+        if (arqueiroRadioButton.isSelected()) return FiltroTipo.ARQUEIRO;
+        if (cavaleiroRadioButton.isSelected()) return FiltroTipo.CAVALEIRO;
+        return FiltroTipo.TODOS;
+    }
+
     /**
      * Configura todos os listeners dos botões.
      */
@@ -50,11 +59,20 @@ public class PainelControles {
      * Configura todos os listeners dos botões de movimento
      */
     private void configurarBotoesMovimento() {
-        buttonCima.addActionListener(e -> getTela().movimentarAldeoes(Direcao.CIMA));
-        buttonBaixo.addActionListener(e -> getTela().movimentarAldeoes(Direcao.BAIXO));
-        buttonEsquerda.addActionListener(e -> getTela().movimentarAldeoes(Direcao.ESQUERDA));
-        buttonDireita.addActionListener(e -> getTela().movimentarAldeoes(Direcao.DIREITA));
+        buttonCima.addActionListener(e -> 
+            getTela().movimentarFiltrados(Direcao.CIMA, getFiltroSelecionado())
+        );
+        buttonBaixo.addActionListener(e -> 
+            getTela().movimentarFiltrados(Direcao.BAIXO, getFiltroSelecionado())
+        );
+        buttonEsquerda.addActionListener(e -> 
+            getTela().movimentarFiltrados(Direcao.ESQUERDA, getFiltroSelecionado())
+        );
+        buttonDireita.addActionListener(e -> 
+            getTela().movimentarFiltrados(Direcao.DIREITA, getFiltroSelecionado())
+        );
     }
+
 
     /**
      * Configura todos os listeners dos botões de criação
@@ -72,7 +90,9 @@ public class PainelControles {
      * Configura o listener do botão de ataque
      */
     private void configurarBotaoAtaque() {
-        atacarButton.addActionListener(e -> getTela().atacar());
+        atacarButton.addActionListener(e ->
+        getTela().atacarFiltrados(getFiltroSelecionado())
+    );
     }
 
     /**
