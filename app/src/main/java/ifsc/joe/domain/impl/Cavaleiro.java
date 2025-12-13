@@ -3,18 +3,22 @@ package ifsc.joe.domain.impl;
 import ifsc.joe.domain.Personagem;
 import ifsc.joe.domain.interfaces.ComMontaria;
 import ifsc.joe.domain.interfaces.Lutador;
+import ifsc.joe.domain.Config;
+
 import javax.swing.*;
 import java.awt.*;
-import java.util.Objects;
-import ifsc.joe.domain.Config;
 import java.awt.Graphics2D;
 import java.awt.AlphaComposite;
-
+import java.util.Objects;
 
 public class Cavaleiro extends Personagem implements Lutador, ComMontaria {
 
+    private boolean montado = true;
     private Image icone;
-    private boolean montado;
+
+    // velocidades configuráveis
+    private final int velMontado = Config.getInt("cavaleiro.velocidade");
+    private final int velDesmontado = Math.max(1, velMontado - 2);
 
     public Cavaleiro(int x, int y, int id) {
         super(
@@ -25,28 +29,47 @@ public class Cavaleiro extends Personagem implements Lutador, ComMontaria {
                 Config.getInt("cavaleiro.velocidade"),
                 Config.getInt("cavaleiro.esquiva")
         );
+
         this.id = id;
         this.atacando = false;
+
+        // estado inicial montado
         this.montado = true;
         this.icone = carregarImagem("cavaleiro");
     }
 
+    // -------------------------------
+    //   MONTARIA
+    // -------------------------------
+
     @Override
     public void montar() {
-        this.montado = true;
-        System.out.println("Cavaleiro " + id + " montou no cavalo.");
+        if (!montado) {
+            montado = true;
+            velocidade = velMontado;
+            icone = carregarImagem("cavaleiro"); // sprite montado
+            System.out.println("Cavaleiro " + id + " montou.");
+        }
     }
 
     @Override
     public void desmontar() {
-        this.montado = false;
-        System.out.println("Cavaleiro " + id + " desmontou do cavalo.");
+        if (montado) {
+            montado = false;
+            velocidade = velDesmontado;
+            icone = carregarImagem("guerreiro"); // sprite desmontado
+            System.out.println("Cavaleiro " + id + " desmontou.");
+        }
     }
 
     @Override
     public boolean estaMontado() {
-        return this.montado;
+        return montado;
     }
+
+    // -------------------------------
+    //   ATAQUE
+    // -------------------------------
 
     @Override
     public void atacar(Personagem alvo) {
@@ -56,19 +79,36 @@ public class Cavaleiro extends Personagem implements Lutador, ComMontaria {
         alvo.receberDano(this.ataque);
     }
 
+    // -------------------------------
+    //   ATUALIZAÇÃO
+    // -------------------------------
+
     @Override
     public void atualizar() {
-
+        // sem lógica contínua específica
     }
+
+    // -------------------------------
+    //   DESENHO (com fade-out)
+    // -------------------------------
 
     @Override
     public void desenhar(Graphics g) {
-        String nome = atacando ? "cavaleiro" : "cavaleiro";
+
         Graphics2D g2 = (Graphics2D) g.create();
         g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, alpha));
+
         g2.drawImage(icone, x, y, null);
+
         g2.dispose();
+
+        // reseta estado de ataque visual
+        atacando = false;
     }
+
+    // -------------------------------
+    //   CARREGAR IMAGENS
+    // -------------------------------
 
     private Image carregarImagem(String nome) {
         return new ImageIcon(Objects.requireNonNull(

@@ -1,6 +1,5 @@
 package ifsc.joe.ui;
 
-import ifsc.joe.domain.Personagem;
 import ifsc.joe.enums.Direcao;
 
 import javax.swing.*;
@@ -32,6 +31,7 @@ public class PainelControles {
     private JButton buttonBaixo;
     private JButton buttonDireita;
     private JLabel logo;
+    private JButton botaoMontaria;
 
     public PainelControles() {
         this.sorteio = new Random();
@@ -53,6 +53,7 @@ public class PainelControles {
         configurarBotoesMovimento();
         configurarBotoesCriacao();
         configurarBotaoAtaque();
+        configurarBotaoMontaria();
     }
 
     /**
@@ -158,4 +159,12 @@ public class PainelControles {
     private void createUIComponents() {
         this.painelTela = new Tela();
     }
+    private void configurarBotaoMontaria() {
+    botaoMontaria.addActionListener(e ->
+        getTela().alternarMontariaFiltrados(getFiltroSelecionado())
+    );
+    }
+    
+
+
 }
