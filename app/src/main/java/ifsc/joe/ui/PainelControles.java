@@ -150,21 +150,33 @@ public class PainelControles {
      */
     public JPanel getPainelPrincipal() {
         return painelPrincipal;
-    }
+}
 
     /**
      * Método chamado pelo Form Designer para criar componentes customizados.
      * Este método é invocado antes do construtor.
      */
     private void createUIComponents() {
-        this.painelTela = new Tela();
+        this.painelTela = new Tela(this); // ← passa referência do PainelControles
     }
+
     private void configurarBotaoMontaria() {
     botaoMontaria.addActionListener(e ->
         getTela().alternarMontariaFiltrados(getFiltroSelecionado())
     );
+}
+
+    public FiltroTipo getFiltroAtual() {
+    return getFiltroSelecionado();
+}
+
+    public void cycleFiltro() {
+        if (todosRadioButton.isSelected()) aldeaoRadioButton.setSelected(true);
+        else if (aldeaoRadioButton.isSelected()) arqueiroRadioButton.setSelected(true);
+        else if (arqueiroRadioButton.isSelected()) cavaleiroRadioButton.setSelected(true);
+        else cavaleiroRadioButton.setSelected(false); todosRadioButton.setSelected(true);
     }
-    
+
 
 
 }
