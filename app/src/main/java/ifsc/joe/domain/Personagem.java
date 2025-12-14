@@ -18,6 +18,7 @@ public abstract class Personagem {
 
     protected boolean vivo;
     protected boolean atacando;
+    protected int alcanceAtaque; 
 
     protected float alpha = 1.0f;
 
@@ -33,21 +34,9 @@ public abstract class Personagem {
         this.atacando = false;
     }
 
-    // ----------------------------------------
-    //  CICLO DE ATUALIZAÇÃO
-    // ----------------------------------------
-    public void atualizar() {
-        // personagem morto entra em fade-out
-        if (!vivo && alpha > 0) {
-            reduzirAlpha(0.04f); // controla a velocidade do fade
-        }
-    }
-
+    public abstract void atualizar();
     public abstract void desenhar(Graphics g);
 
-    // ----------------------------------------
-    //  MOVIMENTO
-    // ----------------------------------------
     public void mover(int dx, int dy, int larg, int alt) {
         if (!vivo) return;
 
@@ -56,13 +45,10 @@ public abstract class Personagem {
 
         if (x < 0) x = 0;
         if (y < 0) y = 0;
-        if (x > larg - 20) x = larg - 20;
-        if (y > alt - 20) y = alt - 20;
+        if (x > larg - 40) x = larg - 40;
+        if (y > alt - 40) y = alt - 40;
     }
 
-    // ----------------------------------------
-    //  COMBATE
-    // ----------------------------------------
     public void receberDano(int valor) {
         if (!vivo) return;
 
@@ -78,7 +64,7 @@ public abstract class Personagem {
         if (vida <= 0) {
             vida = 0;
             vivo = false;
-            alpha = 1.0f; // começa o fade totalmente visível
+            alpha = 1.0f;
         }
     }
 
@@ -86,28 +72,22 @@ public abstract class Personagem {
         System.out.println("O personagem " + id + " desviou do ataque!");
     }
 
-    // ----------------------------------------
-    //  ESTADO
-    // ----------------------------------------
     public boolean isVivo() {
         return vivo;
     }
 
-    public boolean isAtacando() {
-        return atacando;
+    public Rectangle getBounds() {
+        return new Rectangle(x, y, 40, 40);
     }
 
     public void setAtacando(boolean a) {
         this.atacando = a;
     }
 
-    public Rectangle getBounds() {
-        return new Rectangle(x, y, 20, 20);
+    public boolean isAtacando() {
+        return atacando;
     }
 
-    // ----------------------------------------
-    //  FADE
-    // ----------------------------------------
     public float getAlpha() {
         return alpha;
     }
@@ -117,9 +97,6 @@ public abstract class Personagem {
         if (alpha < 0) alpha = 0;
     }
 
-    // ----------------------------------------
-    //  GETTERS
-    // ----------------------------------------
     public int getId() { return id; }
     public void setId(int id) { this.id = id; }
 
@@ -131,4 +108,8 @@ public abstract class Personagem {
 
     public int getAtaque() { return ataque; }
     public int getVelocidade() { return velocidade; }
+    public int getAlcanceAtaque() {
+        return alcanceAtaque;
+    }
+
 }
