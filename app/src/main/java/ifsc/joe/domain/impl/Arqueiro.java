@@ -23,6 +23,7 @@ public class Arqueiro extends Personagem implements Lutador {
         this.id = id;
         this.atacando = false;
         this.icone = carregarImagem("arqueiro");
+        this.alcanceAtaque = Config.getInt("arqueiro.alcance"); 
     }
 
     @Override
@@ -41,11 +42,30 @@ public class Arqueiro extends Personagem implements Lutador {
 
     @Override
     public void desenhar(Graphics g) {
-        String nome = atacando ? "arqueiro" : "arqueiro";
+
         Graphics2D g2 = (Graphics2D) g.create();
-        g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, alpha));
+
+        // desenha alcance ao atacar
+        if (atacando) {
+            int raio = alcanceAtaque;
+
+            int cx = x + 20;
+            int cy = y + 20;
+
+            g2.setColor(new Color(255, 80, 80, 80));
+            g2.fillOval(cx - raio, cy - raio, raio * 2, raio * 2);
+        }
+
+        // sprite
+        g2.setComposite(
+            AlphaComposite.getInstance(AlphaComposite.SRC_OVER, alpha)
+        );
         g2.drawImage(icone, x, y, null);
+
         g2.dispose();
+
+        // reseta estado de ataque visual
+        atacando = false;
     }
 
     private Image carregarImagem(String nome) {

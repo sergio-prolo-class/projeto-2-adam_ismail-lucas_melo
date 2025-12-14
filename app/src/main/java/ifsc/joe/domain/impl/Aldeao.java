@@ -6,8 +6,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.Objects;
 import ifsc.joe.domain.Config;
-import java.awt.Graphics2D;
-import java.awt.AlphaComposite;
 
 public class Aldeao extends Personagem implements Coletador {
 
@@ -25,6 +23,7 @@ public class Aldeao extends Personagem implements Coletador {
         this.id = id;
         this.atacando = false;
         this.icone = carregarImagem("aldeao");
+        this.alcanceAtaque = Config.getInt("aldeao.alcance"); 
     }
 
     @Override
@@ -35,13 +34,35 @@ public class Aldeao extends Personagem implements Coletador {
 
     @Override
     public void desenhar(Graphics g) {
+
+        Graphics2D g2 = (Graphics2D) g.create();
+
+        // desenha alcance ao atacar
+        if (atacando) {
+            int raio = alcanceAtaque;
+
+            int cx = x + 20;
+            int cy = y + 20;
+
+            g2.setColor(new Color(255, 80, 80, 80));
+            g2.fillOval(cx - raio, cy - raio, raio * 2, raio * 2);
+        }
+
+        // sprite
         String nomeImg = atacando ? "aldeao2" : "aldeao";
         this.icone = carregarImagem(nomeImg);
-        Graphics2D g2 = (Graphics2D) g.create();
-        g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, alpha));
+
+        g2.setComposite(
+            AlphaComposite.getInstance(AlphaComposite.SRC_OVER, alpha)
+        );
         g2.drawImage(icone, x, y, null);
+
         g2.dispose();
+
+        // limpa estado visual
+        atacando = false;
     }
+
 
     @Override
     public void coletar(Personagem p) {

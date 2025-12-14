@@ -7,8 +7,6 @@ import ifsc.joe.domain.Config;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.Graphics2D;
-import java.awt.AlphaComposite;
 import java.util.Objects;
 
 public class Cavaleiro extends Personagem implements Lutador, ComMontaria {
@@ -32,6 +30,7 @@ public class Cavaleiro extends Personagem implements Lutador, ComMontaria {
 
         this.id = id;
         this.atacando = false;
+        this.alcanceAtaque = Config.getInt("cavaleiro.alcance"); 
 
         // estado inicial montado
         this.montado = true;
@@ -91,13 +90,26 @@ public class Cavaleiro extends Personagem implements Lutador, ComMontaria {
     // -------------------------------
     //   DESENHO (com fade-out)
     // -------------------------------
-
     @Override
     public void desenhar(Graphics g) {
 
         Graphics2D g2 = (Graphics2D) g.create();
-        g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, alpha));
 
+        // desenha alcance ao atacar
+        if (atacando) {
+            int raio = alcanceAtaque;
+
+            int cx = x + 20;
+            int cy = y + 20;
+
+            g2.setColor(new Color(255, 80, 80, 80));
+            g2.fillOval(cx - raio, cy - raio, raio * 2, raio * 2);
+        }
+
+        // sprite
+        g2.setComposite(
+            AlphaComposite.getInstance(AlphaComposite.SRC_OVER, alpha)
+        );
         g2.drawImage(icone, x, y, null);
 
         g2.dispose();
@@ -105,6 +117,7 @@ public class Cavaleiro extends Personagem implements Lutador, ComMontaria {
         // reseta estado de ataque visual
         atacando = false;
     }
+
 
     // -------------------------------
     //   CARREGAR IMAGENS
