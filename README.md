@@ -78,3 +78,5 @@ Para evitar o uso de números ou strings soltas no código sem explicação e fa
 - **Problema:** Valores como os de ataque e movimentação dos personagens dificultam alterações e geram inconsistências.
 - **Solução:** Implementação de uma classe dedicada para armazenar todos os atributos globais e estáticos do projeto.
 - **Benefício:** Permite alterar configurações gerais do jogo (como os valores citados) em um único arquivo, propagando a mudança automaticamente para todo o projeto.
+
+- https://trello.com/b/8GlN0q0P/projeto-2-poo
